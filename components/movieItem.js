@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: 'gray',
   },
+  body: {
+    height: 140,
+  },
   img: {
     height: 130,
     width: 100,
@@ -37,5 +40,6 @@ const styles = StyleSheet.create({
   },
   description: {
     paddingTop: 10,
+    overflow: 'hidden',
   },
 });

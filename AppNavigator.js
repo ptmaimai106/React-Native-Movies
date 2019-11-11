@@ -16,6 +16,9 @@ export const AppNavigator = createStackNavigator(
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
       },
     },
   },

@@ -4,34 +4,6 @@ import Search from '../components/search';
 import MovieItem from '../components/movieItem';
 import img from '../assert/img.jpg';
 
-const data = [
-  {
-    title: 'Title of Movie 1',
-    description: 'Description of movie',
-    src: img,
-  },
-  {
-    title: 'Title of Movie 2',
-    description: 'Description of movie',
-    src: img,
-  },
-  {
-    title: 'Title of Movie 3',
-    description: 'Description of movie',
-    src: img,
-  },
-  {
-    title: 'Title of Movie 3',
-    description: 'Description of movie',
-    src: img,
-  },
-  {
-    title: 'Title of Movie 3',
-    description: 'Description of movie',
-    src: img,
-  },
-];
-
 export default class Movies extends React.Component {
   static navigationOptions = {
     title: 'MOVIES',
@@ -50,14 +22,14 @@ export default class Movies extends React.Component {
 
   componentDidMount = () => {
     return fetch(
-      'https://api.themoviedb.org/3/list/%7Blist_id%7D?language=en-US&api_key=%3C%3Capi_key%3E%3E',
+      'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1',
     )
       .then(response => response.json())
       .then(responseJson => {
         this.setState(
           {
             isLoading: false,
-            dataSource: responseJson.movies,
+            dataSource: responseJson.results,
           },
           () => {},
         );
@@ -79,16 +51,16 @@ export default class Movies extends React.Component {
       <View style={styles.container}>
         <Search />
         <FlatList
-          data={data}
-          renderItem={({item, index}) => (
+          data={this.state.dataSource}
+          renderItem={({item}) => (
             <MovieItem
               title={item.title}
-              description={item.description}
-              src={item.src}
-              key={index}
+              description={item.overview}
+              src={img}
               navigation={this.props.navigation}
             />
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );

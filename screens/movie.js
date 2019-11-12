@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-
+import {StyleSheet, View, Text, Image} from 'react-native';
 export default class Movie extends React.Component {
   static navigationOptions = {
     title: 'MOVIE',
@@ -11,9 +10,13 @@ export default class Movie extends React.Component {
   }
 
   render() {
+    const {navigation} = this.props;
+    const detail = navigation.getParam('detail');
+    const poster = JSON.stringify(navigation.getParam('src'));
     return (
       <View style={styles.container}>
-        <Text>MOVIE DETAIL</Text>
+        <Text>{detail.title}</Text>
+        <Image source={poster} style={styles.poster} />
       </View>
     );
   }
@@ -24,8 +27,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  movie: {
+  poster: {
     flex: 1,
-    padding: 20,
+    width: 330,
+    resizeMode: 'cover',
+    shadowColor: '#ffff',
+    shadowRadius: 10,
   },
 });

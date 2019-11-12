@@ -9,16 +9,17 @@
     "test": "jest",
     "lint": "eslint .",
     "postinstall": "jetifier -r",
-    "debug":"adb shell input keyevent 82"
-
+    "debug": "adb shell input keyevent 82"
   },
   "dependencies": {
     "expo-font": "^7.0.0",
     "react": "16.9.0",
     "react-native": "0.61.4",
+    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.0",
     "react-native-reanimated": "^1.4.0",
     "react-native-screens": "1.0.0-alpha.23",
+    "react-native-search-bar": "^3.5.1",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",

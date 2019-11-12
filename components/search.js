@@ -7,14 +7,22 @@ export default class Search extends Component {
     this.state = {text: ''};
   }
 
+  handleChangeText = text => {
+    this.setState({
+      text,
+    });
+    this.props.onTextChange(text);
+  };
+
   render() {
+    const {text} = this.state;
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder="Search"
-          onChangeText={text => this.setState({text})}
-          value={this.state.text}
+          placeholder="Search .."
+          onChangeText={input => this.handleChangeText(input)}
+          value={text}
         />
       </View>
     );
@@ -23,11 +31,14 @@ export default class Search extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 2,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
+    marginRight: 20,
+    marginLeft: 8,
   },
   input: {
     height: 40,
+    width: 270,
   },
 });

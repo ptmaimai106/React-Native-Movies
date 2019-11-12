@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import img from '../assert/img.jpg';
-import { gray } from 'ansi-colors';
 
 export default class MovieItem extends Component {
   render() {
@@ -26,7 +25,7 @@ export default class MovieItem extends Component {
           </View>
         ) : (
           <View style={styles.container1}>
-            <Image source={img} style={styles.img1}/>
+            <Image source={img} style={styles.img1} />
             <Text style={styles.title}>{movie.title}</Text>
           </View>
         )}

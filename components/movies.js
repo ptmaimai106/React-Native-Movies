@@ -7,8 +7,8 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import Search from '../components/search';
-import MovieItem from '../components/movieItem';
+import Search from './search';
+import MovieItem from './movieItem';
 import menuIcon1 from '../assert/button4.png';
 import menuIcon0 from '../assert/button0.png';
 
@@ -22,6 +22,7 @@ export default class Movies extends React.Component {
     headerTitleStyle: {
       fontWeight: 'bold',
     },
+    tabBarLabel: 'Now Playing',
   };
   constructor(props) {
     super(props);
@@ -33,9 +34,18 @@ export default class Movies extends React.Component {
   }
 
   componentDidMount = () => {
-    return fetch(
-      'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1',
-    )
+    const {type} = this.props;
+    let url =
+      'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
+
+    if (type === 1) {
+      url =
+        'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
+    } else if (type === 2) {
+      url =
+        'https://api.themoviedb.org/3/movie/top_rated?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
+    }
+    return fetch(url)
       .then(response => response.json())
       .then(responseJson => {
         this.setState(

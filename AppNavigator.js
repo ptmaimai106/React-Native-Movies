@@ -1,14 +1,18 @@
-import Movies from './components/movies';
 import Movie from './components/movie';
+import NowPlaying from './components/nowPlaying';
+import TopRate from './components/topRate';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+
 import {createStackNavigator} from 'react-navigation-stack';
 
-export const AppNavigator = createStackNavigator(
+const NowPlayingStack = createStackNavigator(
   {
-    Movies: Movies,
-    Movie: Movie,
+    NowPlaying,
+    Movie,
   },
   {
-    initialRouteName: 'Movies',
+    initialRouteName: 'NowPlaying',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: '#f4511e',
@@ -22,4 +26,41 @@ export const AppNavigator = createStackNavigator(
       },
     },
   },
+);
+
+const TopRateStack = createStackNavigator(
+  {
+    TopRate,
+    Movie,
+  },
+  {
+    initialRouteName: 'TopRate',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+    },
+  },
+);
+
+export default createAppContainer(
+  createBottomTabNavigator(
+    {
+      NowPlaying: {screen: NowPlayingStack},
+      TopRate: {screen: TopRateStack},
+    },
+    {
+      tabBarOptions: {
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      },
+    },
+  ),
 );

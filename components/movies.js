@@ -22,14 +22,18 @@ export default class Movies extends React.Component {
     headerTitleStyle: {
       fontWeight: 'bold',
     },
-    tabBarLabel: 'Now Playing',
   };
+
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
       isList: true,
       searchText: '',
+      loading: false, // user list loading
+      isRefreshing: false, //for pull to refresh
+      data: [], //user list
+      error: ''
     };
   }
 

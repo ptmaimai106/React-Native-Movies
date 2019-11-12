@@ -10,7 +10,9 @@ export default class MovieItem extends Component {
           <Image style={styles.img} source={src} />
           <View style={styles.body}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description}>{description}</Text>
+            <Text style={styles.description} numberOfLines={4}>
+              {description}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -25,21 +27,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     marginTop: 10,
+    marginHorizontal: 8,
+    shadowColor: '#ffff',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
     backgroundColor: 'gray',
   },
   body: {
     height: 140,
+    flex: 7,
   },
   img: {
+    flex: 3,
     height: 130,
     width: 100,
     marginRight: 10,
   },
   title: {
     fontWeight: 'bold',
+    fontSize: 20,
   },
   description: {
     paddingTop: 10,
-    overflow: 'hidden',
+    fontSize: 15,
   },
 });

@@ -12,11 +12,15 @@ export default class Movie extends React.Component {
   render() {
     const {navigation} = this.props;
     const detail = navigation.getParam('detail');
-    const poster = JSON.stringify(navigation.getParam('src'));
     return (
       <View style={styles.container}>
         <Text>{detail.title}</Text>
-        <Image source={poster} style={styles.poster} />
+        <Image
+          style={styles.poster}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${detail.poster_path}`,
+          }}
+        />
       </View>
     );
   }

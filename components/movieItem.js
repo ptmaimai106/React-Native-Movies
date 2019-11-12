@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
-import img from '../assert/img.jpg';
 
 export default class MovieItem extends Component {
   render() {
@@ -10,12 +9,16 @@ export default class MovieItem extends Component {
         onPress={() =>
           this.props.navigation.navigate('Movie', {
             detail: movie,
-            src: img,
           })
         }>
         {list ? (
           <View style={styles.container}>
-            <Image style={styles.img} source={img} />
+            <Image
+              style={styles.img}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`,
+              }}
+            />
             <View style={styles.body}>
               <Text style={styles.title}>{movie.title}</Text>
               <Text style={styles.description} numberOfLines={4}>
@@ -25,7 +28,12 @@ export default class MovieItem extends Component {
           </View>
         ) : (
           <View style={styles.container1}>
-            <Image source={img} style={styles.img1} />
+            <Image
+              style={styles.img1}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`,
+              }}
+            />
             <Text style={styles.title}>{movie.title}</Text>
           </View>
         )}

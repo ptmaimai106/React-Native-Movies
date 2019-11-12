@@ -2,6 +2,8 @@ import React from 'react';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {AppNavigator} from './AppNavigator';
+import NowPlaying from './components/nowPlaying';
+import TopRate from './components/topRate';
 
 const AppContainer = createAppContainer(
   createBottomTabNavigator(

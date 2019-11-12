@@ -31,14 +31,13 @@ export default class Search extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 2,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
     marginRight: 20,
     marginLeft: 8,
   },
   input: {
-    height: 40,
+    height: 50,
     width: 270,
   },
 });

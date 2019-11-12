@@ -42,6 +42,7 @@ export default class Movies extends React.Component {
           {
             isLoading: false,
             dataSource: responseJson.results,
+            data: responseJson.results,
           },
           () => {},
         );
@@ -52,15 +53,17 @@ export default class Movies extends React.Component {
   };
 
   searchFilterFunction = text => {
-    console.log('here');
-    const {dataSource} = this.state;
-    const newData = dataSource.filter(item => {
-      const itemData = `${item.title.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-    this.setState({data: newData});
+    if (text.trim()) {
+      const {dataSource} = this.state;
+      const newData = dataSource.filter(item => {
+        const itemData = `${item.title.toUpperCase()}`;
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      this.setState({dataSource: newData});
+    } else {
+      this.setState({dataSource: this.state.data});
+    }
   };
 
   handleClickMenu = () => {

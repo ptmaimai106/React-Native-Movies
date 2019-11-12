@@ -1,5 +1,5 @@
-import Movies from './screens/movies';
-import Movie from './screens/movie';
+import Movies from './components/movies';
+import Movie from './components/movie';
 import {createStackNavigator} from 'react-navigation-stack';
 
 export const AppNavigator = createStackNavigator(

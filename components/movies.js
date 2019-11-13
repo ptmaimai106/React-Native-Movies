@@ -22,9 +22,8 @@ export default class Movies extends React.Component {
       isLoading: true,
       isList: true,
       searchText: '',
-      loading: false, // user list loading
       isRefreshing: false, //for pull to refresh
-      data: [], //user list
+      data: [],
       error: '',
       kindof: 'now_playing',
     };
@@ -67,15 +66,27 @@ export default class Movies extends React.Component {
   };
 
   renderFooter = () => {
-    if (!this.state.loading) {
+    if (!this.state.isLoading) {
       return null;
     }
-    return <ActivityIndicator />;
+    return (
+      <View style={styles.renderFooter}>
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
+
+  handleRefresh = () => {
+    if (!this.state.isLoading) {
+      this.page = this.page + 1;
+      this.fetchMovie();
+    }
   };
 
   handleLoadMore = () => {
-    if (!this.state.loading) {
+    if (!this.state.isLoading) {
       this.page = this.page + 1;
+      const {dataSource} = this.state;
       this.fetchMovie();
     }
   };
@@ -85,12 +96,14 @@ export default class Movies extends React.Component {
     let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
       this.page
     }`;
+    this.setState({isLoading: true});
     return fetch(url)
       .then(response => response.json())
       .then(responseJson => {
         this.setState(
           {
             isLoading: false,
+            isRefreshing: false,
             dataSource: responseJson.results,
             data: responseJson.results,
           },
@@ -127,12 +140,13 @@ export default class Movies extends React.Component {
         </View>
         {isList ? (
           <FlatList
+            style={styles.flatList}
             data={this.state.dataSource}
             extraData={this.state}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.isRefreshing}
-                onRefresh={this.onRefresh}
+                onRefresh={this.handleRefresh}
               />
             }
             renderItem={({item}) => (
@@ -144,7 +158,7 @@ export default class Movies extends React.Component {
             )}
             keyExtractor={(item, index) => index.toString()}
             ListFooterComponent={this.renderFooter}
-            onEndReachedThreshold={0.4}
+            // onEndReachedThreshold={0.4}
             onEndReached={this.handleLoadMore}
           />
         ) : (
@@ -156,7 +170,7 @@ export default class Movies extends React.Component {
             refreshControl={
               <RefreshControl
                 refreshing={this.state.isRefreshing}
-                onRefresh={this.onRefresh}
+                onRefresh={this.handleRefresh}
               />
             }
             renderItem={({item}) => (
@@ -178,8 +192,8 @@ export default class Movies extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 20,
+  flatList: {
+    marginBottom: 50,
     marginTop: 20,
   },
   movies: {
@@ -194,5 +208,10 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 'auto',
     marginTop: 12,
+  },
+  renderFooter: {
+    paddingVertical: 20,
+    borderTopWidth: 1,
+    borderColor: '#CED0CE',
   },
 });

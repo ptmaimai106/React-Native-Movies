@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Text,
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
@@ -26,6 +27,7 @@ export default class Movies extends React.Component {
       data: [],
       error: '',
       kindof: 'now_playing',
+      favoriteList: this.props.favoriteList,
     };
   }
 
@@ -35,12 +37,21 @@ export default class Movies extends React.Component {
       this.setState({
         kindof: 'now_playing',
       });
+      this.fetchMovie();
     } else if (type === 2) {
       this.setState({
         kindof: 'top_rated',
       });
+      this.fetchMovie();
+    } else if (type === 0) {
+      const {favoriteList} = this.state;
+      this.setState({
+        dataSource: favoriteList,
+        data: favoriteList,
+        isLoading: false,
+        isRefreshing: false,
+      });
     }
-    this.fetchMovie();
   };
 
   searchFilterFunction = text => {
@@ -112,31 +123,33 @@ export default class Movies extends React.Component {
   };
 
   fetchMovie = () => {
-    const {kindof} = this.state;
-    let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
-      this.page
-    }`;
-    this.setState({isLoading: true});
-    return fetch(url)
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState(
-          {
-            isLoading: false,
-            isRefreshing: false,
-            dataSource: responseJson.results,
-            data: responseJson.results,
-          },
-          () => {},
-        );
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    if (this.props.type === 1 || this.props.type === 2) {
+      const {kindof} = this.state;
+      let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
+        this.page
+      }`;
+      this.setState({isLoading: true});
+      return fetch(url)
+        .then(response => response.json())
+        .then(responseJson => {
+          this.setState(
+            {
+              isLoading: false,
+              isRefreshing: false,
+              dataSource: responseJson.results,
+              data: responseJson.results,
+            },
+            () => {},
+          );
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 
   render() {
-    const {isList} = this.state;
+    const {isList, dataSource} = this.state;
     if (this.state.isLoading && this.page === 1) {
       return (
         <View style={styles.movie}>
@@ -144,6 +157,57 @@ export default class Movies extends React.Component {
         </View>
       );
     }
+    const movies = isList ? (
+      <FlatList
+        style={styles.flatList}
+        data={dataSource}
+        extraData={this.state}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this.handleRefresh}
+          />
+        }
+        renderItem={({item}) => (
+          <MovieItem
+            movie={item}
+            navigation={this.props.navigation}
+            list={true}
+          />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={this.renderFooter}
+        onEndReached={this.handleLoadMore}
+      />
+    ) : (
+      <FlatList
+        data={dataSource}
+        numColumns={2}
+        key={this.state.isList ? 'h' : 'v'}
+        extraData={this.state}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this.handleRefresh}
+          />
+        }
+        renderItem={({item}) => (
+          <MovieItem
+            movie={item}
+            navigation={this.props.navigation}
+            list={false}
+          />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={this.renderFooter}
+        onEndReachedThreshold={0.4}
+        onEndReached={this.handleLoadMore}
+      />
+    );
+
+    const numOfMovies = Object.keys(dataSource).length;
+    const favorites = numOfMovies > 0 ? {movies} : <Text>List is empty</Text>;
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -158,54 +222,8 @@ export default class Movies extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        {isList ? (
-          <FlatList
-            style={styles.flatList}
-            data={this.state.dataSource}
-            extraData={this.state}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.isRefreshing}
-                onRefresh={this.handleRefresh}
-              />
-            }
-            renderItem={({item}) => (
-              <MovieItem
-                movie={item}
-                navigation={this.props.navigation}
-                list={true}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={this.renderFooter}
-            // onEndReachedThreshold={0.4}
-            onEndReached={this.handleLoadMore}
-          />
-        ) : (
-          <FlatList
-            data={this.state.dataSource}
-            numColumns={2}
-            key={this.state.isList ? 'h' : 'v'}
-            extraData={this.state}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.isRefreshing}
-                onRefresh={this.handleRefresh}
-              />
-            }
-            renderItem={({item}) => (
-              <MovieItem
-                movie={item}
-                navigation={this.props.navigation}
-                list={false}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={this.renderFooter}
-            onEndReachedThreshold={0.4}
-            onEndReached={this.handleLoadMore}
-          />
-        )}
+        {/* {favorites} */}
+        {movies}
       </View>
     );
   }

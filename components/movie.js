@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Alert, Image, Button} from 'react-native';
 import Detail from './movieDetail';
 
 export default class Movie extends React.Component {
@@ -11,12 +11,21 @@ export default class Movie extends React.Component {
     this.state = {isLoading: true};
   }
 
+  handleAddToFavorite = () => {
+    Alert.alert('Add to favorite successfully !');
+    this.props.addToFavorite(this.props.navigation.getParam('detail'));
+  };
+
   render() {
     const {navigation} = this.props;
     const detail = navigation.getParam('detail');
     return (
       <View style={styles.container}>
-        <Text>{detail.title}</Text>
+        <Button
+          title="Add to favorite list"
+          color="#f194ff"
+          onPress={this.handleAddToFavorite}
+        />
         <Image
           style={styles.poster}
           source={{
@@ -32,7 +41,7 @@ export default class Movie extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
   },
   poster: {
     flex: 1,
@@ -40,5 +49,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     shadowColor: '#ffff',
     shadowRadius: 10,
+    marginTop: 10,
   },
 });

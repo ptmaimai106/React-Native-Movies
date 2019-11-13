@@ -23,9 +23,6 @@ const NowPlayingStack = createStackNavigator(
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
       },
     },
   },
@@ -46,9 +43,6 @@ const TopRateStack = createStackNavigator(
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
       },
     },
   },
@@ -77,6 +71,7 @@ export default createAppContainer(
         screen: Favorite,
         navigationOptions: {
           tabBarLabel: 'Favorite',
+          title: 'Favorite Movies',
         },
       },
     },

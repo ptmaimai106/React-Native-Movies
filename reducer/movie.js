@@ -7,10 +7,14 @@ let initialState = {
   favoriteList: [],
 };
 
-let movieReducer = (state = initialState, action) => {
+let movieReducer = (state = initialState.favoriteList, action) => {
   switch (action.type) {
     case types.ADD_TO_FAVORITE:
-      return [...state, action.item];
+      if (state.length === 0 || state.indexOf(action.item) === -1) {
+        return [...state, action.item];
+      } else {
+        return [...state];
+      }
     default:
       return state;
   }

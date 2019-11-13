@@ -3,7 +3,7 @@ import * as actions from '../actions/index';
 import Movie from '../components/movie';
 
 const mapStateToProps = state => ({
-  favoriteList: state.favoriteList,
+  favoriteList: state.movieReducer,
 });
 
 const mapDispatchToProps = dispatch => {

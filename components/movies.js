@@ -33,16 +33,12 @@ export default class Movies extends React.Component {
 
   componentDidMount = () => {
     const {type} = this.props;
+    let {kindof} = this.state;
     if (type === 1) {
-      this.setState({
-        kindof: 'now_playing',
-      });
-      this.fetchMovie();
+      this.fetchMovie(kindof);
     } else if (type === 2) {
-      this.setState({
-        kindof: 'top_rated',
-      });
-      this.fetchMovie();
+      kindof = 'top_rated';
+      this.fetchMovie(kindof);
     } else if (type === 0) {
       const {favoriteList} = this.state;
       this.setState({
@@ -52,6 +48,8 @@ export default class Movies extends React.Component {
         isRefreshing: false,
       });
     }
+
+    this.setState({kindof});
   };
 
   searchFilterFunction = text => {
@@ -90,7 +88,7 @@ export default class Movies extends React.Component {
   handleRefresh = () => {
     if (!this.state.isLoading) {
       this.page = this.page + 1;
-      this.fetchMovie();
+      this.fetchMovie(this.state.kindof);
     }
   };
 
@@ -122,9 +120,8 @@ export default class Movies extends React.Component {
     }
   };
 
-  fetchMovie = () => {
+  fetchMovie = kindof => {
     if (this.props.type === 1 || this.props.type === 2) {
-      const {kindof} = this.state;
       let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
         this.page
       }`;

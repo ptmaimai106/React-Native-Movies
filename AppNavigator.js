@@ -14,6 +14,7 @@ const NowPlayingStack = createStackNavigator(
   {
     initialRouteName: 'NowPlaying',
     defaultNavigationOptions: {
+      title: 'MOVIES',
       headerStyle: {
         backgroundColor: '#f4511e',
       },
@@ -36,6 +37,7 @@ const TopRateStack = createStackNavigator(
   {
     initialRouteName: 'TopRate',
     defaultNavigationOptions: {
+      title: 'MOVIES',
       headerStyle: {
         backgroundColor: '#f4511e',
       },

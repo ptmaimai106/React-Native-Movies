@@ -12,18 +12,8 @@ import MovieItem from './movieItem';
 import menuIcon1 from '../assert/button4.png';
 import menuIcon0 from '../assert/button0.png';
 
+const key = 'a2239b4f1d050bfc4e3a37e93b3d9540';
 export default class Movies extends React.Component {
-  static navigationOptions = {
-    title: 'MOVIES',
-    headerStyle: {
-      backgroundColor: '#f4511e',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -33,22 +23,21 @@ export default class Movies extends React.Component {
       loading: false, // user list loading
       isRefreshing: false, //for pull to refresh
       data: [], //user list
-      error: ''
+      error: '',
+      page: 1,
     };
   }
 
   componentDidMount = () => {
     const {type} = this.props;
-    let url =
-      'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
-
+    const {page} = this.state;
+    let kindof = '';
     if (type === 1) {
-      url =
-        'https://api.themoviedb.org/3/movie/now_playing?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
+      kindof = 'now_playing';
     } else if (type === 2) {
-      url =
-        'https://api.themoviedb.org/3/movie/top_rated?api_key=a2239b4f1d050bfc4e3a37e93b3d9540&language=en-US&page=1';
+      kindof = 'top_rated';
     }
+    let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${page}`;
     return fetch(url)
       .then(response => response.json())
       .then(responseJson => {

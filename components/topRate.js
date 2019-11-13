@@ -3,6 +3,6 @@ import Movies from './movies';
 
 export default class TopRate extends React.Component {
   render() {
-    return <Movies type={2} />;
+    return <Movies type={2} navigation={this.props.navigation} />;
   }
 }

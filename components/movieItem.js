@@ -4,6 +4,7 @@ import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 export default class MovieItem extends Component {
   render() {
     const {movie, list} = this.props;
+    const imgPathBase = 'https://image.tmdb.org/t/p/w500/';
     return (
       <TouchableOpacity
         onPress={() =>
@@ -16,7 +17,7 @@ export default class MovieItem extends Component {
             <Image
               style={styles.img}
               source={{
-                uri: `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`,
+                uri: `${imgPathBase}${movie.backdrop_path}`,
               }}
             />
             <View style={styles.body}>
@@ -31,7 +32,7 @@ export default class MovieItem extends Component {
             <Image
               style={styles.img1}
               source={{
-                uri: `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`,
+                uri: `${imgPathBase}${movie.backdrop_path}`,
               }}
             />
             <Text style={styles.title}>{movie.title}</Text>
@@ -45,7 +46,7 @@ export default class MovieItem extends Component {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    borderColor: 'gray',
+    borderColor: '#e4e5ee',
     borderRadius: 5,
     borderWidth: 1,
     flexDirection: 'row',
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     width: 170,
     marginHorizontal: 5,
     marginTop: 10,
-    borderColor: 'gray',
+    borderColor: '#e4e5ee',
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingTop: 10,
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e4e5ee',
   },
   img1: {
+    height: 150,
     width: 140,
   },
   body: {

@@ -6,6 +6,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import Search from './search';
 import MovieItem from './movieItem';
@@ -16,6 +17,7 @@ const key = 'a2239b4f1d050bfc4e3a37e93b3d9540';
 export default class Movies extends React.Component {
   constructor(props) {
     super(props);
+    this.page = 1;
     this.state = {
       isLoading: true,
       isList: true,
@@ -24,35 +26,22 @@ export default class Movies extends React.Component {
       isRefreshing: false, //for pull to refresh
       data: [], //user list
       error: '',
-      page: 1,
+      kindof: 'now_playing',
     };
   }
 
   componentDidMount = () => {
     const {type} = this.props;
-    const {page} = this.state;
-    let kindof = '';
     if (type === 1) {
-      kindof = 'now_playing';
-    } else if (type === 2) {
-      kindof = 'top_rated';
-    }
-    let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${page}`;
-    return fetch(url)
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState(
-          {
-            isLoading: false,
-            dataSource: responseJson.results,
-            data: responseJson.results,
-          },
-          () => {},
-        );
-      })
-      .catch(error => {
-        console.error(error);
+      this.setState({
+        kindof: 'now_playing',
       });
+    } else if (type === 2) {
+      this.setState({
+        kindof: 'top_rated',
+      });
+    }
+    this.fetchMovie();
   };
 
   searchFilterFunction = text => {
@@ -77,9 +66,45 @@ export default class Movies extends React.Component {
     });
   };
 
+  renderFooter = () => {
+    if (!this.state.loading) {
+      return null;
+    }
+    return <ActivityIndicator />;
+  };
+
+  handleLoadMore = () => {
+    if (!this.state.loading) {
+      this.page = this.page + 1;
+      this.fetchMovie();
+    }
+  };
+
+  fetchMovie = () => {
+    const {kindof} = this.state;
+    let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
+      this.page
+    }`;
+    return fetch(url)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState(
+          {
+            isLoading: false,
+            dataSource: responseJson.results,
+            data: responseJson.results,
+          },
+          () => {},
+        );
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   render() {
     const {isList} = this.state;
-    if (this.state.isLoading) {
+    if (this.state.isLoading && this.page === 1) {
       return (
         <View style={styles.movie}>
           <ActivityIndicator />
@@ -103,6 +128,13 @@ export default class Movies extends React.Component {
         {isList ? (
           <FlatList
             data={this.state.dataSource}
+            extraData={this.state}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
             renderItem={({item}) => (
               <MovieItem
                 movie={item}
@@ -111,6 +143,9 @@ export default class Movies extends React.Component {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={this.renderFooter}
+            onEndReachedThreshold={0.4}
+            onEndReached={this.handleLoadMore}
           />
         ) : (
           <FlatList

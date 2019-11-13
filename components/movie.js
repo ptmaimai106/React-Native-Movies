@@ -1,9 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Alert, Image, Button} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import Detail from './movieDetail';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-const icon = (<Icon name='heart' size={40} ></Icon>)
 
 export default class Movie extends React.Component {
   static navigationOptions = {
@@ -14,22 +11,11 @@ export default class Movie extends React.Component {
     this.state = {isLoading: true};
   }
 
-  handleAddToFavorite = () => {
-    Alert.alert('Add to favorite successfully !');
-    this.props.addToFavorite(this.props.navigation.getParam('detail'));
-  };
-
   render() {
     const {navigation} = this.props;
     const detail = navigation.getParam('detail');
     return (
       <View style={styles.container}>
-        {icon}
-        <Button
-          title="Add to favorite list"
-          color="#f194ff"
-          onPress={this.handleAddToFavorite}
-        />
         <Image
           style={styles.poster}
           source={{

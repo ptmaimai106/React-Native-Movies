@@ -1,56 +1,96 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class MovieItem extends Component {
+  handleAddToFavorite = () => {
+    Alert.alert('Add to favorite successfully !');
+    this.props.addToFavorite(this.props.navigation.getParam('detail'));
+  };
+
   render() {
     const {movie, list} = this.props;
     const imgPathBase = 'https://image.tmdb.org/t/p/w500/';
     return (
-      <TouchableOpacity
-        onPress={() =>
-          this.props.navigation.navigate('Movie', {
-            detail: movie,
-          })
-        }>
+      <View>
         {list ? (
           <View style={styles.container}>
-            <Image
-              style={styles.img}
-              source={{
-                uri: `${imgPathBase}${movie.backdrop_path}`,
-              }}
-            />
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('Movie', {
+                  detail: movie,
+                })
+              }>
+              <Image
+                style={styles.img}
+                source={{
+                  uri: `${imgPathBase}${movie.backdrop_path}`,
+                }}
+              />
+            </TouchableOpacity>
             <View style={styles.body}>
-              <Text style={styles.title}>{movie.title}</Text>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  this.props.navigation.navigate('Movie', {
+                    detail: movie,
+                  })
+                }>
+                {movie.title}
+              </Text>
               <Text style={styles.description} numberOfLines={2}>
                 {movie.overview}
               </Text>
               <View style={styles.icon}>
-                <Icon name='heart' size={20}></Icon>
-                <Icon name='star' size={20} color='orange' style={styles.liked}>  </Icon>
+                <Icon name="heart" size={20} />
+                <Icon name="star" size={20} color="orange" style={styles.liked}>
+                  {' '}
+                </Icon>
                 <Text>{movie.vote_average}</Text>
               </View>
-             
             </View>
           </View>
         ) : (
           <View style={styles.container1}>
-            <Image
-              style={styles.img1}
-              source={{
-                uri: `${imgPathBase}${movie.backdrop_path}`,
-              }}
-            />
-            <Text style={styles.title}>{movie.title}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('Movie', {
+                  detail: movie,
+                })
+              }>
+              <Image
+                style={styles.img1}
+                source={{
+                  uri: `${imgPathBase}${movie.backdrop_path}`,
+                }}
+              />
+            </TouchableOpacity>
+            <Text
+              style={styles.title}
+              onPress={() =>
+                this.props.navigation.navigate('Movie', {
+                  detail: movie,
+                })
+              }>
+              {movie.title}
+            </Text>
             <View style={styles.icon}>
-                <Icon name='heart' size={20} ></Icon>
-                <Icon name='star' size={20} color='orange' style={styles.liked}>  </Icon>
-                <Text>{movie.vote_average}</Text>
+              <Icon name="heart" size={20} />
+              <Icon name="star" size={20} color="orange" style={styles.liked}>
+                {' '}
+              </Icon>
+              <Text>{movie.vote_average}</Text>
             </View>
           </View>
         )}
-      </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -81,6 +121,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 5,
     backgroundColor: '#e4e5ee',
   },
@@ -109,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   icon: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
   },
   liked: {

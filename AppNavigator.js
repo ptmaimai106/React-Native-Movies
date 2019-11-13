@@ -18,9 +18,9 @@ const NowPlayingStack = createStackNavigator(
     defaultNavigationOptions: {
       title: 'MOVIES',
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#c5dfee',
       },
-      headerTintColor: '#fff',
+      headerTintColor: 'black',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
@@ -38,9 +38,9 @@ const TopRateStack = createStackNavigator(
     defaultNavigationOptions: {
       title: 'MOVIES',
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#c5dfee',
       },
-      headerTintColor: '#fff',
+      headerTintColor: 'black',
       headerTitleStyle: {
         fontWeight: 'bold',
       },

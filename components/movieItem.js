@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class MovieItem extends Component {
   render() {
@@ -22,9 +23,15 @@ export default class MovieItem extends Component {
             />
             <View style={styles.body}>
               <Text style={styles.title}>{movie.title}</Text>
-              <Text style={styles.description} numberOfLines={4}>
+              <Text style={styles.description} numberOfLines={2}>
                 {movie.overview}
               </Text>
+              <View style={styles.icon}>
+                <Icon name='heart' size={20}></Icon>
+                <Icon name='star' size={20} color='orange' style={styles.liked}>  </Icon>
+                <Text>{movie.vote_average}</Text>
+              </View>
+             
             </View>
           </View>
         ) : (
@@ -36,6 +43,11 @@ export default class MovieItem extends Component {
               }}
             />
             <Text style={styles.title}>{movie.title}</Text>
+            <View style={styles.icon}>
+                <Icon name='heart' size={20} ></Icon>
+                <Icon name='star' size={20} color='orange' style={styles.liked}>  </Icon>
+                <Text>{movie.vote_average}</Text>
+            </View>
           </View>
         )}
       </TouchableOpacity>
@@ -89,9 +101,18 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 18,
+    height: 40,
   },
   description: {
     paddingTop: 10,
     fontSize: 15,
+    marginBottom: 20,
+  },
+  icon: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  liked: {
+    marginLeft: 'auto',
   },
 });

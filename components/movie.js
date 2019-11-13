@@ -1,6 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, Alert, Image, Button} from 'react-native';
+import {StyleSheet, View, Alert, Image, Button} from 'react-native';
 import Detail from './movieDetail';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const icon = (<Icon name='heart' size={40} ></Icon>)
 
 export default class Movie extends React.Component {
   static navigationOptions = {
@@ -21,6 +24,7 @@ export default class Movie extends React.Component {
     const detail = navigation.getParam('detail');
     return (
       <View style={styles.container}>
+        {icon}
         <Button
           title="Add to favorite list"
           color="#f194ff"

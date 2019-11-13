@@ -31,7 +31,9 @@ export default props => {
         <Text style={styles.title}>{detail.title}</Text>
         <Text style={styles.date}>{detail.release_date}</Text>
         <Text style={styles.vote}>{detail.vote_average}</Text>
-        <Text style={styles.descr}>{detail.overview}</Text>
+        <Text style={styles.descr} numberOfLines={4}>
+          {detail.overview}
+        </Text>
       </FadeInView>
     </View>
   );

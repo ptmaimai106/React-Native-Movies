@@ -1,5 +1,5 @@
 import React from 'react';
-import Movies from './movies';
+import Movies from '../containers/movies';
 
 export default class TopRate extends React.Component {
   render() {

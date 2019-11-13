@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import Detail from './movieDetail';
+
 export default class Movie extends React.Component {
   static navigationOptions = {
     title: 'MOVIE',

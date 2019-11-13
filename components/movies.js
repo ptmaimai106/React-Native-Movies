@@ -152,6 +152,13 @@ export default class Movies extends React.Component {
             data={this.state.dataSource}
             numColumns={2}
             key={this.state.isList ? 'h' : 'v'}
+            extraData={this.state}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
             renderItem={({item}) => (
               <MovieItem
                 movie={item}
@@ -160,6 +167,9 @@ export default class Movies extends React.Component {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={this.renderFooter}
+            onEndReachedThreshold={0.4}
+            onEndReached={this.handleLoadMore}
           />
         )}
       </View>
@@ -168,6 +178,10 @@ export default class Movies extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
   movies: {
     alignItems: 'stretch',
     justifyContent: 'space-around',

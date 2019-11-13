@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
+import Detail from './movieDetail';
 export default class Movie extends React.Component {
   static navigationOptions = {
     title: 'MOVIE',
@@ -21,6 +22,7 @@ export default class Movie extends React.Component {
             uri: `https://image.tmdb.org/t/p/w500/${detail.poster_path}`,
           }}
         />
+        <Detail detail={detail} />
       </View>
     );
   }

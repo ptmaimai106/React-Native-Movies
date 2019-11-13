@@ -86,8 +86,28 @@ export default class Movies extends React.Component {
   handleLoadMore = () => {
     if (!this.state.isLoading) {
       this.page = this.page + 1;
-      const {dataSource} = this.state;
-      this.fetchMovie();
+      let {data, kindof} = this.state;
+      let url = `https://api.themoviedb.org/3/movie/${kindof}?api_key=${key}&language=en-US&page=${
+        this.page
+      }`;
+      this.setState({isLoading: true});
+      return fetch(url)
+        .then(response => response.json())
+        .then(responseJson => {
+          data = data.concat(responseJson.results);
+          this.setState(
+            {
+              isLoading: false,
+              isRefreshing: false,
+              dataSource: data,
+              data,
+            },
+            () => {},
+          );
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   };
 

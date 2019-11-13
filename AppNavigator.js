@@ -55,13 +55,26 @@ const TopRateStack = createStackNavigator(
 export default createAppContainer(
   createBottomTabNavigator(
     {
-      NowPlaying: {screen: NowPlayingStack},
-      TopRate: {screen: TopRateStack},
+      NowPlaying: {
+        screen: NowPlayingStack,
+        navigationOptions: {
+          tabBarLabel: 'Now Playing',
+        },
+      },
+      TopRate: {
+        screen: TopRateStack,
+        navigationOptions: {
+          tabBarLabel: 'Top Rate',
+        },
+      },
     },
     {
       tabBarOptions: {
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
+        // barStyle: {
+        //   fontWeight: 'bold',
+        // },
       },
     },
   ),

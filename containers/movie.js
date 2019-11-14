@@ -1,20 +1,11 @@
 import {connect} from 'react-redux';
-import * as actions from '../actions/index';
 import Movie from '../components/movie';
 
 const mapStateToProps = state => ({
   favoriteList: state.movieReducer,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addToFavorite: item => {
-      dispatch(actions.addToFavorite(item));
-    },
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
 )(Movie);

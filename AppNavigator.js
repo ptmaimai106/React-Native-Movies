@@ -5,6 +5,7 @@ import Favorite from './containers/favorite';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
+import React from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -68,18 +69,6 @@ const FavoriteStack = createStackNavigator(
   },
 );
 
-const getTabBarIcon = (navigation, focused, tintColor) => {
-  const {routeName} = navigation.state;
-  let iconName;
-  if (routeName === 'NowPlaying') {
-    iconName = 'video';
-  } else if (routeName === 'TopRate') {
-    iconName = 'star';
-  }
-  // eslint-disable-next-line react/react-in-jsx-scope
-  return <Icon name={iconName} size={25} color={tintColor} />;
-};
-
 export default createAppContainer(
   createBottomTabNavigator(
     {
@@ -87,32 +76,28 @@ export default createAppContainer(
         screen: NowPlayingStack,
         navigationOptions: {
           tabBarLabel: 'Now Playing',
+          tabBarIcon: ({tintColor}) => (
+            <Icon name="camera" size={25} color={tintColor} />
+          ),
         },
-        defaultNavigationOptions: ({navigation}) => ({
-          tabBarIcon: ({focused, tintColor}) =>
-            getTabBarIcon(navigation, focused, tintColor),
-        }),
       },
       TopRate: {
         screen: TopRateStack,
         navigationOptions: {
           tabBarLabel: 'Top Rate',
+          tabBarIcon: ({tintColor}) => (
+            <Icon name="star" size={25} color={tintColor} />
+          ),
         },
-        defaultNavigationOptions: ({navigation}) => ({
-          tabBarIcon: ({focused, tintColor}) =>
-            getTabBarIcon(navigation, focused, tintColor),
-        }),
       },
       Favorite: {
         screen: FavoriteStack,
         navigationOptions: {
           tabBarLabel: 'Favorite',
-          title: 'Favorite Movies',
+          tabBarIcon: ({tintColor}) => (
+            <Icon name="heart" size={25} color={tintColor} />
+          ),
         },
-        defaultNavigationOptions: ({navigation}) => ({
-          tabBarIcon: ({focused, tintColor}) =>
-            getTabBarIcon(navigation, focused, tintColor),
-        }),
       },
     },
     {

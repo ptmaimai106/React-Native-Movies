@@ -107,7 +107,12 @@ export default createAppContainer(
         labelStyle: {
           fontSize: 15,
           fontWeight: 'bold',
-          marginBottom: 10,
+          marginBottom: 5,
+          marginTop: 5,
+        },
+        style: {
+          height: 60,
+          paddingTop: 8,
         },
       },
     },

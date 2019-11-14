@@ -6,13 +6,18 @@ import {
   Text,
   TouchableOpacity,
   Alert,
+  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class MovieItem extends Component {
   handleAddToFavorite = () => {
     Alert.alert('Add to favorite successfully !');
-    this.props.addToFavorite(this.props.navigation.getParam('detail'));
+    //console.log(this.props.movie);
+    this.props.addToFavorite(this.props.navigation.getParam('movie'));
+    // AsyncStorage.setItem('favorites', this.props.movie);
+    // let data = AsyncStorage.getItem('favorites');
+    // console.log(data);
   };
 
   render() {
@@ -49,7 +54,11 @@ export default class MovieItem extends Component {
                 {movie.overview}
               </Text>
               <View style={styles.icon}>
-                <Icon name="heart" size={20} />
+                <Icon
+                  name="heart"
+                  size={20}
+                  onPress={this.handleAddToFavorite}
+                />
                 <Icon name="star" size={20} color="orange" style={styles.liked}>
                   {' '}
                 </Icon>
@@ -82,7 +91,7 @@ export default class MovieItem extends Component {
               {movie.title}
             </Text>
             <View style={styles.icon}>
-              <Icon name="heart" size={20} />
+              <Icon name="heart" size={20} onPress={this.handleAddToFavorite} />
               <Icon name="star" size={20} color="orange" style={styles.liked}>
                 {' '}
               </Icon>

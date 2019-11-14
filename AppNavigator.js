@@ -1,7 +1,7 @@
 import Movie from './containers/movie';
 import NowPlaying from './components/nowPlaying';
 import TopRate from './components/topRate';
-import Favorite from './components/favorite';
+import Favorite from './containers/favorite';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -16,7 +16,7 @@ const NowPlayingStack = createStackNavigator(
   {
     initialRouteName: 'NowPlaying',
     defaultNavigationOptions: {
-      title: 'MOVIES',
+      title: 'NOW PLAYING MOVIES',
       headerStyle: {
         backgroundColor: '#c5dfee',
       },
@@ -36,7 +36,27 @@ const TopRateStack = createStackNavigator(
   {
     initialRouteName: 'TopRate',
     defaultNavigationOptions: {
-      title: 'MOVIES',
+      title: 'TOP RATING MOVIE',
+      headerStyle: {
+        backgroundColor: '#c5dfee',
+      },
+      headerTintColor: 'black',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  },
+);
+
+const FavoriteStack = createStackNavigator(
+  {
+    Favorite,
+    Movie,
+  },
+  {
+    initialRouteName: 'Favorite',
+    defaultNavigationOptions: {
+      title: 'FAVORITE MOVIES',
       headerStyle: {
         backgroundColor: '#c5dfee',
       },
@@ -50,7 +70,6 @@ const TopRateStack = createStackNavigator(
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const {routeName} = navigation.state;
-  console.log(routeName);
   let iconName;
   if (routeName === 'NowPlaying') {
     iconName = 'video';
@@ -85,7 +104,7 @@ export default createAppContainer(
         }),
       },
       Favorite: {
-        screen: Favorite,
+        screen: FavoriteStack,
         navigationOptions: {
           tabBarLabel: 'Favorite',
           title: 'Favorite Movies',

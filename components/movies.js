@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import Search from './search';
-import MovieItem from './movieItem';
+import MovieItem from '../containers/movieItem';
 import menuIcon1 from '../assert/button4.png';
 import menuIcon0 from '../assert/button0.png';
 
@@ -27,7 +27,6 @@ export default class Movies extends React.Component {
       data: [],
       error: '',
       kindof: 'now_playing',
-      favoriteList: this.props.favoriteList,
     };
   }
 
@@ -40,10 +39,9 @@ export default class Movies extends React.Component {
       kindof = 'top_rated';
       this.fetchMovie(kindof);
     } else if (type === 0) {
-      const {favoriteList} = this.state;
+      const {data} = this.props;
       this.setState({
-        dataSource: favoriteList,
-        data: favoriteList,
+        dataSource: data,
         isLoading: false,
         isRefreshing: false,
       });
@@ -54,7 +52,6 @@ export default class Movies extends React.Component {
 
   searchFilterFunction = text => {
     const {dataSource, data} = this.state;
-
     if (text.trim()) {
       const newData = dataSource.filter(item => {
         const itemData = `${item.title.toUpperCase()}`;
@@ -65,6 +62,28 @@ export default class Movies extends React.Component {
     } else {
       this.setState({dataSource: data});
     }
+
+    // if (this.props.type === 1 || this.props.type === 2) {
+    //   let url = `https://api.themoviedb.org/3/search/company?api_key=${key}&query=${text}&page=${
+    //     this.page
+    //   }`;
+    //   this.setState({isLoading: true});
+    //   return fetch(url)
+    //     .then(response => response.json())
+    //     .then(responseJson => {
+    //       this.setState(
+    //         {
+    //           isLoading: false,
+    //           isRefreshing: false,
+    //           dataSource: responseJson.results,
+    //         },
+    //         () => {},
+    //       );
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //     });
+    // }
   };
 
   handleClickMenu = () => {

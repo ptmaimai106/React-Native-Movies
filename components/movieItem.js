@@ -13,8 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class MovieItem extends Component {
   handleAddToFavorite = () => {
     Alert.alert('Add to favorite successfully !');
-    //console.log(this.props.movie);
-    this.props.addToFavorite(this.props.navigation.getParam('movie'));
+    this.props.addToFavorite(this.props.movie);
     // AsyncStorage.setItem('favorites', this.props.movie);
     // let data = AsyncStorage.getItem('favorites');
     // console.log(data);

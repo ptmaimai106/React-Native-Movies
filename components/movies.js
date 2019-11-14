@@ -39,9 +39,11 @@ export default class Movies extends React.Component {
       kindof = 'top_rated';
       this.fetchMovie(kindof);
     } else if (type === 0) {
-      const {data} = this.props;
+      const {favoriteList} = this.props;
+      console.log(Object.keys(favoriteList).length);
       this.setState({
-        dataSource: data,
+        dataSource: favoriteList,
+        data: favoriteList,
         isLoading: false,
         isRefreshing: false,
       });
@@ -49,6 +51,17 @@ export default class Movies extends React.Component {
 
     this.setState({kindof});
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.type === 0) {
+      return {
+        dataSource: nextProps.favoriteList,
+        data: nextProps.favoriteList,
+        isLoading: false,
+        isRefreshing: false,
+      };
+    }
+  }
 
   searchFilterFunction = text => {
     const {dataSource, data} = this.state;

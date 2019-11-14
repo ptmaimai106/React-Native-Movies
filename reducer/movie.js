@@ -3,12 +3,18 @@ const types = {
   REMOVE_FROM_FAVORITE: 'REMOVE_FROM_FAVORITE',
 };
 
-let movieReducer = (state = [], action) => {
+let initialize = {
+  movie: [],
+};
+
+let movieReducer = (state = initialize.movie, action) => {
   switch (action.type) {
     case types.ADD_TO_FAVORITE:
       if (state.length === 0 || state.indexOf(action.item) === -1) {
         return [...state, action.item];
-      } else return [...state];
+      } else {
+        return state;
+      }
     default:
       return state;
   }
